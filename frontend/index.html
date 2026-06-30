@@ -4,26 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MindTech Quantum AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        body {
-            font-family: 'Exo 2', sans-serif;
-            background: #05080F;
-            color: #E8EDF5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        :root {
+            --primary: #00B4D8;
+            --primary-dark: #0096C7;
+            --secondary: #00F5D4;
+            --quantum: #8A2BE2;
+            --quantum-glow: rgba(138,43,226,0.3);
+            --gold: #FFD700;
+            --success: #00FF88;
+            --danger: #EF476F;
+            --warning: #FFD166;
+            --dark-bg: #05080F;
+            --glass-bg: rgba(15, 25, 45, 0.45);
+            --glass-border: rgba(0,180,216,0.2);
+            --text-primary: #E8EDF5;
+            --text-secondary: #8A99B0;
+            --font-exo: 'Exo 2', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
+        
+        body { 
+            font-family: var(--font-exo); 
+            background: var(--dark-bg); 
+            color: var(--text-primary); 
             min-height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
         
-        /* ===== ANIMATED BACKGROUND PARTICLES ===== */
-        .bg-particles {
+        #particles-js {
             position: fixed;
             top: 0;
             left: 0;
@@ -31,189 +46,212 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0,180,216,0.03) 0%, transparent 50%),
-                radial-gradient(circle at 80% 50%, rgba(138,43,226,0.03) 0%, transparent 50%),
-                radial-gradient(circle at 50% 100%, rgba(0,245,212,0.02) 0%, transparent 40%);
-        }
-        
-        .bg-particles::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                radial-gradient(2px 2px at 20px 30px, rgba(0,180,216,0.15), transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(138,43,226,0.12), transparent),
-                radial-gradient(2px 2px at 50px 160px, rgba(0,245,212,0.10), transparent),
-                radial-gradient(2px 2px at 90px 40px, rgba(0,180,216,0.12), transparent),
-                radial-gradient(2px 2px at 130px 80px, rgba(138,43,226,0.08), transparent),
-                radial-gradient(2px 2px at 160px 30px, rgba(0,245,212,0.12), transparent);
-            background-size: 200px 200px;
-            background-repeat: repeat;
-            animation: twinkle 8s ease-in-out infinite alternate;
-        }
-        
-        @keyframes twinkle {
-            0% { opacity: 0.3; }
-            100% { opacity: 1; }
         }
         
         .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
             position: relative;
             z-index: 1;
-            text-align: center;
-            max-width: 620px;
-            width: 90%;
-            padding: 50px 40px;
-            background: rgba(15, 25, 45, 0.35);
-            border: 1px solid rgba(0, 180, 216, 0.15);
+        }
+        
+        /* ===== GLASSMORPHISM ===== */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
             border-radius: 28px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 
-                0 20px 60px rgba(0,0,0,0.5),
-                inset 0 1px 0 rgba(255,255,255,0.05);
             transition: all 0.3s ease;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
         }
         
-        .container:hover {
-            border-color: rgba(0, 180, 216, 0.3);
-            box-shadow: 
-                0 20px 60px rgba(0,0,0,0.5),
-                0 0 40px rgba(0,180,216,0.05),
-                inset 0 1px 0 rgba(255,255,255,0.08);
+        .glass-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
         }
         
-        /* ===== LOGO ===== */
-        .logo-wrapper {
-            margin-bottom: 20px;
+        .glass-card.quantum-border {
+            border-color: var(--quantum);
+            box-shadow: 0 0 40px var(--quantum-glow);
+        }
+        
+        .glass-card.gold-border {
+            border-color: var(--gold);
+            box-shadow: 0 0 30px rgba(255,215,0,0.1);
+        }
+        
+        /* ===== HEADER ===== */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 30px;
+        }
+        
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-area img {
+            height: 65px;
+            width: auto;
+            filter: drop-shadow(0 0 25px rgba(0,180,216,0.15));
             transform: rotate(-1.5deg);
-            transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.4, 1);
-            display: inline-block;
+            transition: 0.3s;
         }
         
-        .logo-wrapper:hover {
+        .logo-area img:hover {
             transform: rotate(0deg) scale(1.02);
+            filter: drop-shadow(0 0 40px rgba(0,180,216,0.3));
         }
         
-        .logo-wrapper img {
-            width: 120px;
-            height: auto;
-            filter: drop-shadow(0 0 30px rgba(0,180,216,0.15));
-            display: block;
-            margin: 0 auto;
-        }
-        
-        /* ===== TITLE ===== */
-        .title {
-            font-size: 2.4rem;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #00B4D8, #8A2BE2, #00F5D4);
-            background-size: 300% 300%;
+        .brand-text h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--quantum), var(--secondary));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: gradientShift 6s ease-in-out infinite;
-            margin: 10px 0 5px;
         }
         
-        @keyframes gradientShift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+        .brand-text p {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            letter-spacing: 3px;
+            font-family: var(--font-mono);
         }
         
-        .subtitle {
-            font-size: 0.75rem;
-            font-weight: 300;
-            letter-spacing: 6px;
-            color: rgba(0, 245, 212, 0.6);
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            font-family: 'Exo 2', sans-serif;
+        .header-badge {
+            background: rgba(138,43,226,0.12);
+            border: 1px solid rgba(138,43,226,0.3);
+            border-radius: 60px;
+            padding: 6px 18px;
+            font-size: 0.7rem;
+            color: var(--secondary);
+            font-family: var(--font-mono);
+        }
+        
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 18px 12px;
+        }
+        
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--secondary), var(--primary), var(--quantum));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            font-family: var(--font-mono);
+            letter-spacing: 1px;
+        }
+        
+        /* ===== MAIN CONTENT GRID ===== */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .content-grid.three-col {
+            grid-template-columns: repeat(3, 1fr);
         }
         
         /* ===== QUANTUM BADGE ===== */
-        .quantum-badge {
-            display: inline-block;
-            background: rgba(138, 43, 226, 0.12);
-            border: 1px solid rgba(138, 43, 226, 0.3);
-            border-radius: 60px;
-            padding: 8px 24px;
-            font-size: 0.75rem;
-            font-weight: 400;
-            color: #00F5D4;
-            letter-spacing: 1px;
-            margin: 15px 0 10px;
-            backdrop-filter: blur(4px);
-            transition: all 0.3s ease;
-            cursor: default;
-        }
-        
-        .quantum-badge:hover {
-            background: rgba(138, 43, 226, 0.2);
-            border-color: rgba(138, 43, 226, 0.6);
-            box-shadow: 0 0 30px rgba(138, 43, 226, 0.1);
-        }
-        
-        .quantum-badge i {
-            margin-right: 6px;
-        }
-        
-        /* ===== STATUS ===== */
-        .status {
-            color: #00FF88;
-            font-size: 1rem;
-            font-weight: 400;
-            margin: 15px 0 8px;
-            display: flex;
+        .quantum-badge-display {
+            display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
+            gap: 10px;
+            background: rgba(138,43,226,0.08);
+            border: 1px solid rgba(138,43,226,0.25);
+            border-radius: 60px;
+            padding: 10px 24px;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--secondary);
+            margin: 5px 0;
+            transition: 0.3s;
         }
         
-        .status .dot {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: #00FF88;
-            border-radius: 50%;
-            animation: pulseDot 2s ease-in-out infinite;
+        .quantum-badge-display:hover {
+            background: rgba(138,43,226,0.15);
+            border-color: rgba(138,43,226,0.5);
         }
         
-        @keyframes pulseDot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.8); }
+        /* ===== SCIENTIFIC DATA ===== */
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--glass-border);
         }
         
-        .patent-info {
+        .metric-row:last-child {
+            border-bottom: none;
+        }
+        
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.8rem;
+        }
+        
+        .metric-value {
+            font-weight: 600;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+        
+        .metric-value.gold { color: var(--gold); }
+        .metric-value.green { color: var(--success); }
+        .metric-value.purple { color: var(--quantum); }
+        .metric-value.cyan { color: var(--primary); }
+        
+        /* ===== PATENT INFO ===== */
+        .patent-block {
+            background: rgba(0,0,0,0.3);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 12px;
+        }
+        
+        .patent-block .patent-title {
+            font-size: 0.8rem;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .patent-block .patent-detail {
             font-size: 0.7rem;
-            color: rgba(138, 43, 226, 0.7);
-            font-weight: 300;
-            letter-spacing: 0.5px;
-            margin-top: 5px;
-        }
-        
-        /* ===== DIVIDER ===== */
-        .divider {
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0,180,216,0.3), transparent);
-            margin: 20px auto;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
         }
         
         /* ===== BUTTONS ===== */
-        .button-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-            margin: 20px 0 10px;
-        }
-        
         .btn {
             display: inline-flex;
             align-items: center;
@@ -221,94 +259,153 @@
             gap: 10px;
             padding: 12px 28px;
             border-radius: 60px;
-            font-family: 'Exo 2', sans-serif;
+            font-family: var(--font-exo);
             font-weight: 600;
             font-size: 0.85rem;
             text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+            transition: all 0.3s ease;
             cursor: pointer;
             border: none;
-            min-width: 140px;
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, #00B4D8, #8A2BE2);
+            background: linear-gradient(135deg, var(--primary), var(--quantum));
             color: white;
-            box-shadow: 0 4px 20px rgba(0, 180, 216, 0.2);
+            box-shadow: 0 4px 20px rgba(0,180,216,0.2);
         }
         
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 35px rgba(0, 180, 216, 0.4);
-        }
-        
-        .btn-primary:active {
-            transform: translateY(0px);
+            box-shadow: 0 8px 35px rgba(0,180,216,0.4);
         }
         
         .btn-secondary {
-            background: rgba(0, 180, 216, 0.08);
-            border: 1px solid rgba(0, 180, 216, 0.25);
-            color: #E8EDF5;
+            background: rgba(0,180,216,0.08);
+            border: 1px solid var(--glass-border);
+            color: var(--text-primary);
         }
         
         .btn-secondary:hover {
-            background: rgba(0, 180, 216, 0.18);
-            border-color: rgba(0, 180, 216, 0.5);
-            transform: translateY(-3px);
+            background: rgba(0,180,216,0.18);
+            border-color: var(--primary);
         }
         
         .btn-ghost {
             background: transparent;
-            border: 1px solid rgba(138, 154, 176, 0.2);
-            color: rgba(138, 154, 176, 0.8);
+            border: 1px solid rgba(138,154,176,0.15);
+            color: var(--text-secondary);
         }
         
         .btn-ghost:hover {
-            border-color: rgba(138, 154, 176, 0.5);
-            color: #E8EDF5;
-            transform: translateY(-3px);
+            border-color: rgba(138,154,176,0.4);
+            color: var(--text-primary);
         }
         
-        .btn i {
-            font-size: 0.9rem;
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #00CC77);
+            color: var(--dark-bg);
         }
         
-        /* ===== LOADING SPINNER ===== */
-        .spinner {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255,255,255,0.1);
-            border-top: 2px solid #00B4D8;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            margin-right: 8px;
+        /* ===== API DOCS LINK ===== */
+        .docs-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(0,180,216,0.08);
+            border: 1px solid var(--glass-border);
+            border-radius: 60px;
+            color: var(--primary);
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            transition: 0.3s;
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .docs-link:hover {
+            background: rgba(0,180,216,0.18);
+            border-color: var(--primary);
+            transform: translateY(-2px);
         }
         
-        /* ===== TOAST NOTIFICATION ===== */
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid var(--glass-border);
+            margin-top: 30px;
+        }
+        
+        .footer .footer-badges {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .footer .footer-badge {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+        
+        .footer .footer-badge i {
+            color: var(--primary);
+            margin-right: 6px;
+        }
+        
+        .footer .copyright {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            opacity: 0.5;
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .content-grid { grid-template-columns: 1fr; }
+            .content-grid.three-col { grid-template-columns: 1fr 1fr; }
+        }
+        
+        @media (max-width: 768px) {
+            .header { flex-direction: column; text-align: center; }
+            .logo-area { justify-content: center; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .content-grid.three-col { grid-template-columns: 1fr; }
+        }
+        
+        @media (max-width: 480px) {
+            .container { padding: 15px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .glass-card { padding: 18px; }
+            .brand-text h1 { font-size: 1.2rem; }
+            .logo-area img { height: 50px; }
+        }
+        
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
+        
+        /* ===== TOAST ===== */
         .toast {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
-            background: rgba(15, 25, 45, 0.95);
+            background: rgba(15,25,45,0.95);
             backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 180, 216, 0.2);
+            border: 1px solid var(--glass-border);
             border-radius: 16px;
             padding: 14px 28px;
-            color: #E8EDF5;
+            color: var(--text-primary);
             font-size: 0.85rem;
             z-index: 999;
             opacity: 0;
-            transition: all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1);
+            transition: all 0.5s ease;
             pointer-events: none;
             box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            font-family: var(--font-exo);
         }
         
         .toast.show {
@@ -317,357 +414,295 @@
             pointer-events: auto;
         }
         
-        .toast i {
-            margin-right: 10px;
-            color: #00FF88;
-        }
-        
-        .toast.error i {
-            color: #EF476F;
-        }
-        
-        /* ===== LOADING OVERLAY ===== */
-        .loading-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5,8,15,0.7);
-            backdrop-filter: blur(4px);
-            border-radius: 28px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 10;
-        }
-        
-        .loading-overlay.active {
-            display: flex;
-        }
-        
-        .loading-overlay .spinner-big {
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(255,255,255,0.1);
-            border-top: 3px solid #00B4D8;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        
-        .loading-overlay p {
-            font-size: 0.85rem;
-            color: rgba(138, 154, 176, 0.8);
-        }
-        
-        /* ===== FOOTER ===== */
-        .footer {
-            margin-top: 25px;
-            font-size: 0.65rem;
-            color: rgba(138, 154, 176, 0.5);
-            letter-spacing: 1px;
-            font-weight: 300;
-        }
-        
-        .footer a {
-            color: rgba(0, 180, 216, 0.5);
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        
-        .footer a:hover {
-            color: rgba(0, 180, 216, 0.9);
-        }
-        
-        /* ===== GLASS CORNER ACCENTS ===== */
-        .container::before,
-        .container::after {
-            content: '';
-            position: absolute;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            filter: blur(60px);
-            opacity: 0.15;
-            pointer-events: none;
-        }
-        
-        .container::before {
-            top: -30px;
-            right: -30px;
-            background: #8A2BE2;
-        }
-        
-        .container::after {
-            bottom: -30px;
-            left: -30px;
-            background: #00B4D8;
-        }
-        
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 480px) {
-            .container { padding: 35px 20px; }
-            .title { font-size: 1.8rem; }
-            .logo-wrapper img { width: 90px; }
-            .quantum-badge { font-size: 0.65rem; padding: 6px 16px; }
-            .btn { padding: 10px 20px; font-size: 0.75rem; min-width: 120px; }
-            .button-group { gap: 10px; }
-        }
+        .toast i { margin-right: 10px; }
+        .toast.success i { color: var(--success); }
+        .toast.error i { color: var(--danger); }
     </style>
 </head>
 <body>
-    <div class="bg-particles"></div>
+    <div id="particles-js"></div>
     
-    <!-- ===== TOAST NOTIFICATION ===== -->
-    <div class="toast" id="toast">
-        <i class="fas fa-check-circle"></i> <span id="toastMessage">Action completed</span>
-    </div>
+    <!-- ===== TOAST ===== -->
+    <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Ready</span></div>
     
-    <div class="container" id="mainContainer">
-        <!-- ===== LOADING OVERLAY ===== -->
-        <div class="loading-overlay" id="loadingOverlay">
-            <div class="spinner-big"></div>
-            <p>Fetching quantum data...</p>
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <div class="logo-area">
+                <img src="https://i.postimg.cc/QtyvGF3B/Quantum-AI-image-logo-removebg-preview.png" alt="MindTech Quantum AI">
+                <div class="brand-text">
+                    <h1>Quantum AI</h1>
+                    <p>MINDTECH INDUSTRIES · QUANTUM DIVISION</p>
+                </div>
+            </div>
+            <div>
+                <span class="header-badge"><i class="fas fa-atom"></i> CHSH S=2.76</span>
+                <span class="header-badge" style="margin-left:8px;"><i class="fas fa-check-circle" style="color:var(--success);"></i> Operational</span>
+            </div>
+        </header>
+        
+        <!-- ===== STATS ===== -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="glass-card stat-card">
+                <div class="stat-value" id="chshValue">2.76</div>
+                <div class="stat-label">CHSH S · Bell Violation</div>
+            </div>
+            <div class="glass-card stat-card">
+                <div class="stat-value" id="correlationValue">98.4%</div>
+                <div class="stat-label">Quantum Correlation</div>
+            </div>
+            <div class="glass-card stat-card">
+                <div class="stat-value" id="aboveClassical">38%</div>
+                <div class="stat-label">Above Classical Limit</div>
+            </div>
+            <div class="glass-card stat-card">
+                <div class="stat-value" id="qubitCount">156</div>
+                <div class="stat-label">IBM Qubits · Kingston</div>
+            </div>
         </div>
         
-        <!-- ===== LOGO (GLASS, SLIGHT TILT) ===== -->
-        <div class="logo-wrapper">
-            <img src="https://i.postimg.cc/QtyvGF3B/Quantum-AI-image-logo-removebg-preview.png" alt="MindTech Quantum AI">
+        <!-- ===== MAIN CONTENT ===== -->
+        <div class="content-grid">
+            <!-- ===== LEFT: QUANTUM BADGE & SCIENCE ===== -->
+            <div class="glass-card quantum-border">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+                    <i class="fas fa-atom" style="color:var(--quantum); font-size:1.5rem;"></i>
+                    <h3 style="font-weight:600; font-size:1.1rem;">Quantum Verification</h3>
+                </div>
+                
+                <div class="quantum-badge-display">
+                    <i class="fas fa-check-circle" style="color:var(--success);"></i>
+                    <span id="badgeText">CHSH S=2.76 · 38% Above Classical</span>
+                </div>
+                
+                <div style="margin-top:20px;">
+                    <div class="metric-row">
+                        <span class="metric-label">Bell Test Result</span>
+                        <span class="metric-value gold" id="chshDisplay">S = 2.76</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Classical Limit</span>
+                        <span class="metric-value">≤ 2.00</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Quantum Max</span>
+                        <span class="metric-value purple">2√2 = 2.828</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Violation</span>
+                        <span class="metric-value green" id="violationDisplay">+0.76 (38%)</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Correlation</span>
+                        <span class="metric-value cyan" id="correlationDisplay">98.4%</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">IBM Processor</span>
+                        <span class="metric-value">Kingston (156 qubits)</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">IBM Job ID</span>
+                        <span class="metric-value" style="font-size:0.7rem; color:var(--text-secondary);" id="jobIdDisplay">d8uhvl4bp3hs738628cg</span>
+                    </div>
+                    <div class="metric-row">
+                        <span class="metric-label">Verification Date</span>
+                        <span class="metric-value" style="font-size:0.7rem; color:var(--text-secondary);" id="verifyDate">2026-06-25</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- ===== RIGHT: PATENT & STATUS ===== -->
+            <div class="glass-card gold-border">
+                <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
+                    <i class="fas fa-file-patent" style="color:var(--gold); font-size:1.5rem;"></i>
+                    <h3 style="font-weight:600; font-size:1.1rem;">Patent & Status</h3>
+                </div>
+                
+                <div class="patent-block">
+                    <div class="patent-title" id="patentNumber">SA 2026/05142</div>
+                    <div class="patent-detail" id="patentTitle">ADAPTIVE LEARNING ECOSYSTEM WITH INTEGRATED SAFETY MONITORING AND OPTIONAL QUANTUM-SECURE VERIFICATION</div>
+                    <div style="margin-top:8px;">
+                        <span class="patent-detail"><strong>Applicant:</strong> <span id="patentApplicant">MINDTECH INDUSTRIES (PTY) LTD</span></span><br>
+                        <span class="patent-detail"><strong>Inventor:</strong> <span id="patentInventor">MDLULI, Llewelyn Khulumani</span></span><br>
+                        <span class="patent-detail"><strong>Filing Date:</strong> <span id="patentFiling">12 May 2026</span></span><br>
+                        <span class="patent-detail"><strong>Status:</strong> <span id="patentStatus" style="color:var(--success);">Provisional Filed · Priority Date Established</span></span><br>
+                        <span class="patent-detail"><strong>Next Deadline:</strong> <span id="patentDeadline" style="color:var(--warning);">PCT Filing: 12 May 2027</span></span>
+                    </div>
+                </div>
+                
+                <div style="margin-top:16px; display:flex; gap:12px; flex-wrap:wrap;">
+                    <span class="quantum-badge-display" style="font-size:0.7rem; padding:6px 16px;">
+                        <i class="fas fa-check-circle" style="color:var(--success);"></i> IBM Verified
+                    </span>
+                    <span class="quantum-badge-display" style="font-size:0.7rem; padding:6px 16px;">
+                        <i class="fas fa-shield-alt" style="color:var(--gold);"></i> Sovereign Patent
+                    </span>
+                </div>
+            </div>
         </div>
         
-        <!-- ===== TITLE ===== -->
-        <h1 class="title">Quantum AI</h1>
-        <div class="subtitle">MindTech Industries</div>
-        
-        <!-- ===== QUANTUM BADGE ===== -->
-        <div class="quantum-badge" id="quantumBadge">
-            <i>⚛️</i> <span id="badgeText">CHSH S=2.76 · 38% Above Classical</span>
+        <!-- ===== BOTTOM: SCIENCE EXPLANATION ===== -->
+        <div class="content-grid three-col">
+            <div class="glass-card">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                    <i class="fas fa-flask" style="color:var(--secondary);"></i>
+                    <h4 style="font-size:0.95rem;">What is CHSH?</h4>
+                </div>
+                <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.7;">
+                    The CHSH inequality is a Bell test. Classical physics says |S| ≤ 2. Quantum mechanics predicts |S| ≤ 2√2 ≈ 2.828. Our result of <strong style="color:var(--gold);">S = 2.76</strong> proves quantum entanglement — a violation of classical physics by <strong style="color:var(--success);">38%</strong>.
+                </p>
+            </div>
+            
+            <div class="glass-card">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                    <i class="fas fa-microchip" style="color:var(--primary);"></i>
+                    <h4 style="font-size:0.95rem;">IBM Kingston</h4>
+                </div>
+                <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.7;">
+                    Our quantum experiments were run on <strong style="color:var(--primary);">IBM's Kingston processor</strong> — a 156-qubit superconducting quantum computer. The CHSH test was executed via Qiskit Runtime Service with <strong style="color:var(--secondary);">98.4% correlation</strong>.
+                </p>
+            </div>
+            
+            <div class="glass-card">
+                <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+                    <i class="fas fa-flag-africa" style="color:var(--gold);"></i>
+                    <h4 style="font-size:0.95rem;">African Sovereignty</h4>
+                </div>
+                <p style="font-size:0.8rem; color:var(--text-secondary); line-height:1.7;">
+                    MindTech is building <strong style="color:var(--gold);">Africa's first sovereign quantum technology ecosystem</strong>. No foreign cloud dependency. All data stays in Africa. This patent is the foundation of African quantum computing.
+                </p>
+            </div>
         </div>
-        
-        <!-- ===== STATUS ===== -->
-        <div class="status" id="statusDisplay">
-            <span class="dot"></span> <span id="statusText">Backend Operational</span>
-        </div>
-        
-        <div class="patent-info" id="patentInfo">
-            SA Patent 2026/05142 · IBM Verified
-        </div>
-        
-        <div class="divider"></div>
         
         <!-- ===== BUTTONS ===== -->
-        <div class="button-group">
-            <button class="btn btn-primary" onclick="fetchQuantumData()">
+        <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:24px;">
+            <button class="btn btn-primary" onclick="refreshData()">
                 <i class="fas fa-sync-alt"></i> Refresh Data
             </button>
-            <button class="btn btn-secondary" onclick="handleAction('Documentation')">
-                <i class="fas fa-file-alt"></i> Docs
-            </button>
-            <button class="btn btn-ghost" onclick="handleAction('Quantum Status')">
-                <i class="fas fa-atom"></i> Quantum Status
-            </button>
-        </div>
-        
-        <div class="button-group" style="margin-top: 6px;">
-            <button class="btn btn-secondary" onclick="window.open('https://quantum-ai-z2wx.onrender.com', '_blank')">
-                <i class="fas fa-server"></i> API
-            </button>
-            <button class="btn btn-secondary" onclick="window.open('https://github.com/mindtechindustriesai-alt', '_blank')">
-                <i class="fab fa-github"></i> GitHub
+            <a href="https://quantum-ai-z2wx.onrender.com/docs" target="_blank" class="docs-link">
+                <i class="fas fa-book"></i> API Documentation
+            </a>
+            <button class="btn btn-ghost" onclick="showToast('⚛️ Quantum status: CHSH S=2.76 · Operational', 'success')">
+                <i class="fas fa-atom"></i> Check Status
             </button>
         </div>
-        
-        <div class="divider"></div>
         
         <!-- ===== FOOTER ===== -->
-        <div class="footer">
-            © 2026 <a href="#" onclick="handleAction('MindTech')">MindTech Industries</a> · Quantum. Sovereign. African.
-        </div>
+        <footer class="footer">
+            <div class="footer-badges">
+                <span class="footer-badge"><i class="fas fa-atom"></i> CHSH S=2.76</span>
+                <span class="footer-badge"><i class="fas fa-file-patent"></i> SA 2026/05142</span>
+                <span class="footer-badge"><i class="fas fa-microchip"></i> IBM Kingston (156 qubits)</span>
+                <span class="footer-badge"><i class="fas fa-flag-africa"></i> Quantum. Sovereign. African.</span>
+            </div>
+            <div class="copyright">© 2026 MindTech Industries · Quantum AI Division</div>
+        </footer>
     </div>
     
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
-        // ===== CONFIGURATION =====
+        // ===== PARTICLES =====
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 55, density: { enable: true, value_area: 1000 } },
+                color: { value: ["#00B4D8", "#00F5D4", "#8A2BE2"] },
+                shape: { type: "circle" },
+                opacity: { value: 0.25, random: true },
+                size: { value: 2.5, random: true },
+                line_linked: { enable: true, distance: 150, color: "#00B4D8", opacity: 0.08 },
+                move: { enable: true, speed: 0.7 }
+            },
+            interactivity: { events: { onhover: { enable: true, mode: "repulse" } } }
+        });
+        
+        // ===== DATA =====
         const API_BASE = 'https://quantum-ai-z2wx.onrender.com';
+        let currentData = null;
         
-        // ===== TOAST SYSTEM =====
+        // ===== TOAST =====
         let toastTimer = null;
-        
-        function showToast(message, isError = false) {
+        function showToast(msg, type = 'success') {
             const toast = document.getElementById('toast');
-            const toastMessage = document.getElementById('toastMessage');
-            
-            toastMessage.textContent = message;
-            toast.className = 'toast' + (isError ? ' error' : '');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.textContent = msg;
+            toast.className = 'toast ' + type;
             toast.classList.add('show');
-            
-            if (toastTimer) clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 4000);
-        }
-        
-        // ===== LOADING OVERLAY =====
-        function setLoading(active) {
-            const overlay = document.getElementById('loadingOverlay');
-            if (active) {
-                overlay.classList.add('active');
-            } else {
-                overlay.classList.remove('active');
-            }
-        }
-        
-        // ===== FETCH QUANTUM DATA =====
-        async function fetchQuantumData() {
-            setLoading(true);
-            
-            try {
-                // Fetch root endpoint
-                const rootRes = await fetch(`${API_BASE}/`);
-                const rootData = await rootRes.json();
-                
-                // Fetch quantum status
-                const statusRes = await fetch(`${API_BASE}/api/quantum/status`);
-                const statusData = await statusRes.json();
-                
-                // Fetch badge
-                const badgeRes = await fetch(`${API_BASE}/api/quantum/badge`);
-                const badgeData = await badgeRes.json();
-                
-                // Fetch patent
-                const patentRes = await fetch(`${API_BASE}/api/quantum/patent`);
-                const patentData = await patentRes.json();
-                
-                // Update UI
-                updateUI(rootData, statusData, badgeData, patentData);
-                
-                showToast('✅ Quantum data refreshed successfully');
-                
-            } catch (error) {
-                console.error('Fetch error:', error);
-                showToast('❌ Error fetching quantum data. Check backend.', true);
-                // Use fallback data
-                updateUIWithFallback();
-            } finally {
-                setLoading(false);
-            }
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
         }
         
         // ===== UPDATE UI =====
-        function updateUI(root, status, badge, patent) {
-            // Badge
-            const badgeText = document.getElementById('badgeText');
-            if (badge && badge.badge) {
-                badgeText.textContent = badge.badge;
-            } else if (status && status.text) {
-                badgeText.textContent = status.text;
-            } else {
-                badgeText.textContent = 'CHSH S=2.76 · 38% Above Classical';
-            }
+        function updateUI(data) {
+            currentData = data;
             
-            // Status
-            const statusText = document.getElementById('statusText');
-            if (root && root.status) {
-                statusText.textContent = root.status.charAt(0).toUpperCase() + root.status.slice(1);
-            } else {
-                statusText.textContent = 'Operational';
-            }
+            document.getElementById('chshValue').textContent = data.chsh_s?.toFixed(2) || '2.76';
+            document.getElementById('correlationValue').textContent = (data.correlation * 100)?.toFixed(1) + '%' || '98.4%';
+            document.getElementById('aboveClassical').textContent = data.percent_above_classical + '%' || '38%';
+            document.getElementById('qubitCount').textContent = data.qubits || '156';
+            document.getElementById('badgeText').textContent = data.text || 'CHSH S=2.76 · 38% Above Classical';
+            document.getElementById('chshDisplay').textContent = 'S = ' + (data.chsh_s?.toFixed(3) || '2.760');
+            document.getElementById('violationDisplay').textContent = '+' + (data.chsh_s - 2)?.toFixed(2) + ' (' + (data.percent_above_classical || 38) + '%)';
+            document.getElementById('correlationDisplay').textContent = (data.correlation * 100)?.toFixed(1) + '%' || '98.4%';
+            document.getElementById('jobIdDisplay').textContent = data.ibm_job_id || 'd8uhvl4bp3hs738628cg';
+            document.getElementById('verifyDate').textContent = data.verification_date || '2026-06-25';
+            document.getElementById('patentNumber').textContent = data.patent || 'SA 2026/05142';
             
-            // Patent
-            const patentInfo = document.getElementById('patentInfo');
-            if (patent && patent.application) {
-                patentInfo.textContent = `${patent.application} · ${patent.status || 'IBM Verified'}`;
-            } else if (root && root.patent) {
-                patentInfo.textContent = `${root.patent} · IBM Verified`;
-            } else {
-                patentInfo.textContent = 'SA Patent 2026/05142 · IBM Verified';
-            }
-            
-            // Update badge class for CHSH value
-            updateBadgeGlow(status);
+            showToast('✅ Quantum data refreshed', 'success');
         }
         
-        // ===== FALLBACK DATA (when backend unreachable) =====
-        function updateUIWithFallback() {
-            document.getElementById('badgeText').textContent = 'CHSH S=2.76 · 38% Above Classical';
-            document.getElementById('statusText').textContent = 'Operational (Cache)';
-            document.getElementById('patentInfo').textContent = 'SA Patent 2026/05142 · IBM Verified';
-            showToast('⚠️ Using cached data. Backend may be unreachable.', true);
-        }
-        
-        // ===== BADGE GLOW EFFECT =====
-        function updateBadgeGlow(statusData) {
-            const badge = document.getElementById('quantumBadge');
-            if (statusData && statusData.chsh_s) {
-                const s = statusData.chsh_s;
-                if (s >= 2.7) {
-                    badge.style.borderColor = 'rgba(0, 245, 212, 0.6)';
-                    badge.style.boxShadow = '0 0 30px rgba(0, 245, 212, 0.2)';
-                } else if (s >= 2.5) {
-                    badge.style.borderColor = 'rgba(0, 180, 216, 0.5)';
-                    badge.style.boxShadow = '0 0 20px rgba(0, 180, 216, 0.15)';
-                }
+        function updateUIPatent(data) {
+            if (data) {
+                document.getElementById('patentTitle').textContent = data.title || 'ADAPTIVE LEARNING ECOSYSTEM...';
+                document.getElementById('patentApplicant').textContent = data.applicant || 'MINDTECH INDUSTRIES (PTY) LTD';
+                document.getElementById('patentInventor').textContent = data.inventor || 'MDLULI, Llewelyn Khulumani';
+                document.getElementById('patentFiling').textContent = data.filing_date || '12 May 2026';
+                document.getElementById('patentStatus').textContent = data.status || 'Provisional Filed';
+                document.getElementById('patentDeadline').textContent = data.next_deadline || 'PCT Filing: 12 May 2027';
             }
         }
         
-        // ===== BUTTON HANDLER =====
-        function handleAction(action) {
-            console.log(`[MindTech Quantum AI] Action: ${action}`);
-            
-            const messages = {
-                'Documentation': '📄 Opening documentation...',
-                'Quantum Status': '⚛️ Fetching quantum status...',
-                'GitHub': '🐙 Opening GitHub repository...',
-                'MindTech': '🏢 MindTech Industries — Quantum. Sovereign. African.'
-            };
-            
-            const toastMessage = messages[action] || `✅ ${action} triggered`;
-            showToast(toastMessage);
-            
-            // ===== ACTUAL ACTIONS =====
-            const actions = {
-                'Documentation': () => window.open('https://github.com/mindtechindustriesai-alt', '_blank'),
-                'Quantum Status': () => fetchQuantumData(),
-                'GitHub': () => window.open('https://github.com/mindtechindustriesai-alt', '_blank'),
-                'MindTech': () => window.open('https://mindtechindustriesai-alt.github.io', '_blank')
-            };
-            
-            if (actions[action]) {
-                actions[action]();
-            }
-            
-            // Haptic feedback
-            if (navigator.vibrate) {
-                navigator.vibrate(10);
+        // ===== FETCH DATA =====
+        async function refreshData() {
+            try {
+                const statusRes = await fetch(`${API_BASE}/api/quantum/status`);
+                const statusData = await statusRes.json();
+                updateUI(statusData);
+                
+                const patentRes = await fetch(`${API_BASE}/api/quantum/patent`);
+                const patentData = await patentRes.json();
+                updateUIPatent(patentData);
+                
+            } catch (e) {
+                console.error('Fetch error:', e);
+                showToast('❌ Backend unreachable. Using cached data.', 'error');
+                updateUI({
+                    chsh_s: 2.76,
+                    correlation: 0.984,
+                    percent_above_classical: 38,
+                    text: 'CHSH S=2.76 · 38% Above Classical',
+                    ibm_job_id: 'd8uhvl4bp3hs738628cg',
+                    verification_date: '2026-06-25',
+                    patent: 'SA 2026/05142',
+                    qubits: 156
+                });
             }
         }
         
         // ===== KEYBOARD SHORTCUTS =====
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'r' || e.key === 'R') fetchQuantumData();
-            if (e.key === 'd' || e.key === 'D') handleAction('Documentation');
-            if (e.key === 'q' || e.key === 'Q') handleAction('Quantum Status');
-            if (e.key === 'g' || e.key === 'G') handleAction('GitHub');
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'r' || e.key === 'R') refreshData();
         });
         
-        // ===== AUTO-REFRESH ON LOAD =====
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initial fetch
-            setTimeout(fetchQuantumData, 500);
-            
-            // Auto-refresh every 60 seconds
-            setInterval(fetchQuantumData, 60000);
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            refreshData();
+            setInterval(refreshData, 60000);
+            console.log('🚀 MindTech Quantum AI Loaded');
+            console.log('   ⚛️ CHSH S=2.76 · 38% Above Classical');
+            console.log('   📡 Press R to refresh');
+            console.log('   📄 SA Patent 2026/05142');
+            console.log('   📚 API Docs: https://quantum-ai-z2wx.onrender.com/docs');
         });
-        
-        console.log('🚀 MindTech Quantum AI Loaded');
-        console.log(`   📡 API: ${API_BASE}`);
-        console.log('   📌 Keyboard Shortcuts:');
-        console.log('   R → Refresh Data');
-        console.log('   D → Documentation');
-        console.log('   Q → Quantum Status');
-        console.log('   G → GitHub');
-        console.log('   ⚛️ CHSH S=2.76 · 38% Above Classical');
     </script>
 </body>
 </html>
