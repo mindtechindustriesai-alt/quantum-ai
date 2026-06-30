@@ -1,15 +1,11 @@
 import os
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 import uvicorn
 
-# Load environment variables
 load_dotenv()
 
-# ============================================================
-# QUANTUM BADGE DATA
-# ============================================================
 QUANTUM_BADGE = {
     "chsh_s": 2.76,
     "classical_limit": 2.0,
@@ -23,9 +19,6 @@ QUANTUM_BADGE = {
     "text": "CHSH S=2.76 · 38% above classical"
 }
 
-# ============================================================
-# FASTAPI APP
-# ============================================================
 app = FastAPI(
     title="Quantum AI",
     description="Quantum finance powered by CHSH S=2.76",
@@ -34,9 +27,6 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
-# ============================================================
-# CORS CONFIGURATION — EXPLICIT AND ROBUST
-# ============================================================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -47,20 +37,15 @@ app.add_middleware(
         "http://localhost:3000",
         "http://localhost:8000",
         "https://mindtechindustriesai-alt.github.io",
-        "https://blacksky-frontend.onrender.com",
-        "https://entangleguard.onrender.com",
-        "*"  # Allow all origins for testing
+        "*"
     ],
     allow_credentials=True,
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"],
     allow_headers=["*"],
     expose_headers=["*"],
-    max_age=86400  # Cache preflight requests for 24 hours
+    max_age=86400
 )
 
-# ============================================================
-# HEALTH CHECK
-# ============================================================
 @app.get("/")
 async def root():
     return {
@@ -75,15 +60,8 @@ async def root():
 
 @app.get("/health")
 async def health():
-    return {
-        "status": "healthy",
-        "timestamp": "2026-06-30T00:00:00Z",
-        "uptime": "operational"
-    }
+    return {"status": "healthy"}
 
-# ============================================================
-# QUANTUM STATUS ENDPOINTS
-# ============================================================
 @app.get("/api/quantum/status")
 async def quantum_status():
     return QUANTUM_BADGE
@@ -113,9 +91,6 @@ async def patent_info():
         "next_deadline": "PCT filing: 12 May 2027"
     }
 
-# ============================================================
-# RUN THE APP
-# ============================================================
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",
