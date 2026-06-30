@@ -28,11 +28,19 @@ app = FastAPI(
 )
 
 # ════════════════════════════════════════════════════════════
-# CORS — MUST HAVE THIS EXACT CONFIGURATION
+# CORS — Explicit Allow All Origins (Production Fix)
 # ════════════════════════════════════════════════════════════
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://quantum-ai-1-iify.onrender.com",
+        "https://quantum-ai-z2wx.onrender.com",
+        "https://quantum-ai-frontend.onrender.com",
+        "https://quantum-ai.onrender.com",
+        "http://localhost:5500",
+        "http://127.0.0.1:5500",
+        "*"  # Allow all origins for testing
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
