@@ -36,7 +36,7 @@
         .status-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
         .status-dot.green { background: #00FF88; box-shadow: 0 0 12px rgba(0,255,136,0.4); }
         .status-dot.red { background: #EF476F; box-shadow: 0 0 12px rgba(239,71,111,0.4); }
-        #response-area { background: rgba(0,0,0,0.4); border: 1px solid rgba(0,180,216,0.2); border-radius: 16px; padding: 16px 20px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.75rem; color: #00F5D4; min-height: 40px; display: none; max-height: 300px; overflow-y: auto; }
+        #response-area { background: rgba(0,0,0,0.4); border: 1px solid rgba(0,180,216,0.2); border-radius: 16px; padding: 16px 20px; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 0.75rem; color: #00F5D4; min-height: 40px; display: none; max-height: 300px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
         #response-area.error { color: #EF476F; border-color: #EF476F; }
         .footer-logos { display: flex; justify-content: center; align-items: center; gap: 40px; margin-top: 35px; padding-top: 25px; border-top: 1px solid rgba(0,180,216,0.2); flex-wrap: wrap; }
         .footer-logo { height: 40px; width: auto; opacity: 0.7; transition: all 0.3s; filter: grayscale(20%); }
@@ -94,13 +94,13 @@
         <div id="response-area"></div>
 
         <div class="status-container">
-            <div class="status-item"><span class="status-dot green" id="statusDot"></span> <span id="statusText">Backend Operational</span></div>
+            <div class="status-item"><span class="status-dot green" id="statusDot"></span> <span id="statusText">Checking backend...</span></div>
             <div class="status-item"><i class="fas fa-check-circle" style="color:#00FF88;"></i> Entanglement Verified</div>
             <div class="status-item"><i class="fas fa-check-circle" style="color:#00FF88;"></i> Patent Pending</div>
         </div>
 
         <div style="text-align: center; font-size: 0.8rem; color: #8A99B0; margin: 10px 0 20px;">
-            <i class="fas fa-arrow-right" style="color:#00B4D8;"></i> Live API: <a href="https://quantum-ai.onrender.com" style="color:#00F5D4; text-decoration:none;" target="_blank">quantum-ai.onrender.com</a>
+            <i class="fas fa-arrow-right" style="color:#00B4D8;"></i> Live API: <a href="https://quantum-ai-z2wx.onrender.com" style="color:#00F5D4; text-decoration:none;" target="_blank">quantum-ai-z2wx.onrender.com</a>
         </div>
 
         <div class="footer-logos">
@@ -112,36 +112,17 @@
 
     <script>
         // ════════════════════════════════════════════════════════════
-        // CHOOSE YOUR API MODE (Uncomment ONE line below)
+        // CONFIGURATION — LIVE BACKEND
         // ════════════════════════════════════════════════════════════
+        const API_BASE = 'https://quantum-ai-z2wx.onrender.com';
 
-        // OPTION 1: Use the live backend (recommended for production)
-        const API_BASE = 'https://quantum-ai.onrender.com';
-
-        // OPTION 2: Use fallback data (if CORS issues persist)
-        // const API_BASE = null;
-
-        // ════════════════════════════════════════════════════════════
-        // FALLBACK DATA — 100% Verified
-        // ════════════════════════════════════════════════════════════
-        const FALLBACK_DATA = {
-            service: "Quantum AI",
-            version: "1.0.0",
-            status: "operational",
-            quantum_badge: "CHSH S=2.76 · 38% above classical",
-            patent: "SA 2026/05142",
-            verification: "2026-06-25",
-            ibm_job_id: "d8uhvl4bp3hs738628cg"
-        };
-
-        // ════════════════════════════════════════════════════════════
-        // APP LOGIC
-        // ════════════════════════════════════════════════════════════
+        // DOM Elements
         const toast = document.getElementById('toast');
         const responseArea = document.getElementById('response-area');
         const statusDot = document.getElementById('statusDot');
         const statusText = document.getElementById('statusText');
 
+        // ─── Utilities ──────────────────────────────────────────────
         function showToast(msg, isError = false) {
             toast.textContent = msg;
             toast.className = 'toast' + (isError ? ' error' : '');
@@ -153,7 +134,7 @@
         function showResponse(data, isError = false) {
             responseArea.style.display = 'block';
             responseArea.className = isError ? 'error' : '';
-            responseArea.innerHTML = typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
+            responseArea.textContent = typeof data === 'object' ? JSON.stringify(data, null, 2) : data;
         }
 
         function setStatus(online) {
@@ -162,12 +143,12 @@
                 statusText.textContent = 'Backend Operational';
             } else {
                 statusDot.className = 'status-dot red';
-                statusText.textContent = 'Backend Unreachable (Using Fallback)';
+                statusText.textContent = 'Backend Unreachable';
             }
         }
 
+        // ─── Check Backend Health ──────────────────────────────────
         async function checkBackend() {
-            if (!API_BASE) { setStatus(false); return; }
             try {
                 const res = await fetch(`${API_BASE}/health`, { signal: AbortSignal.timeout(3000) });
                 setStatus(res.ok);
@@ -185,16 +166,15 @@
             this.disabled = true;
 
             try {
-                if (!API_BASE) throw new Error('API mode disabled. Using fallback.');
-                const res = await fetch(`${API_BASE}/`, { signal: AbortSignal.timeout(5000) });
+                const res = await fetch(`${API_BASE}/`);
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 const data = await res.json();
                 showResponse(data);
                 showToast('✅ API verification successful!');
                 setStatus(true);
             } catch (e) {
-                showResponse({ ...FALLBACK_DATA, note: `⚠️ Backend unreachable (${e.message}). Using fallback.` }, true);
-                showToast('⚠️ Using fallback data', true);
+                showResponse({ error: e.message, hint: 'Check backend URL or CORS settings.' }, true);
+                showToast('❌ API verification failed', true);
                 setStatus(false);
             }
 
@@ -217,7 +197,7 @@
 ║                                          ║
 ║  ✅ VERIFIED · 25 June 2026              ║
 ╚══════════════════════════════════════════╝`;
-            showResponse(`<pre style="color:#00F5D4; font-size:0.7rem; line-height:1.4;">${badge}</pre>`);
+            showResponse(badge);
             showToast('✅ Quantum badge generated!');
         });
 
