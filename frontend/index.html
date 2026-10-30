@@ -60,7 +60,6 @@
         .metric-value.gold { color: var(--gold); } .metric-value.green { color: var(--success); }
         .metric-value.purple { color: var(--quantum); } .metric-value.cyan { color: var(--primary); }
         .patent-block { background: rgba(0,0,0,0.3); border-radius: 16px; padding: 16px; margin-top: 12px; }
-        .patent-block .patent-title { font-size: 0.8rem; color: var(--gold); font-weight: 600; margin-bottom: 4px; }
         .patent-block .patent-detail { font-size: 0.7rem; color: var(--text-secondary); font-family: var(--font-mono); }
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px;
             padding: 12px 28px; border-radius: 60px; font-family: var(--font-exo); font-weight: 600;
@@ -74,28 +73,6 @@
             background: rgba(0,180,216,0.08); border: 1px solid var(--glass-border); border-radius: 60px;
             color: var(--primary); text-decoration: none; font-family: var(--font-mono); font-size: 0.8rem; transition: 0.3s; }
         .docs-link:hover { background: rgba(0,180,216,0.18); border-color: var(--primary); transform: translateY(-2px); }
-        .corporate-ad-center { background: linear-gradient(135deg, rgba(70,25,115,0.22), rgba(110,80,20,0.18));
-            border: 2px solid rgba(200,164,80,0.4); border-radius: 20px; padding: 1.5rem 2rem; margin: 2rem 0;
-            display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap;
-            text-decoration: none; color: inherit; transition: all 0.3s ease; position: relative;
-            overflow: hidden; min-height: 100px; }
-        .corporate-ad-center::before { content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(200,164,80,0.08), transparent);
-            animation: kd-shine 4s infinite; }
-        @keyframes kd-shine { 0% { left: -100%; } 100% { left: 100%; } }
-        .corporate-ad-center:hover { border-color: var(--gold); box-shadow: 0 0 40px rgba(200,164,80,0.3); transform: translateY(-3px); }
-        .corporate-ad-text { font-family: var(--font-mono); font-size: 0.95rem; color: #E8D5A3; letter-spacing: 1px; }
-        .corporate-ad-text strong { color: var(--gold); font-size: 1.15rem; display: block; margin-bottom: 4px; }
-        .kd-rotating-logo { height: 65px; width: 65px; object-fit: contain; background: transparent; flex-shrink: 0;
-            opacity: 1 !important; filter: brightness(0.78) contrast(1.28) drop-shadow(0 0 7px rgba(80,20,135,0.98))
-            drop-shadow(0 0 16px rgba(138,43,226,0.95)) drop-shadow(0 0 25px rgba(200,164,80,0.72)) !important;
-            transform-style: preserve-3d; backface-visibility: visible;
-            animation: kd-superposition-visible 6s ease-in-out infinite !important; }
-        @keyframes kd-superposition-visible {
-            0%,100% { transform: perspective(600px) rotateY(0deg) rotateZ(0deg) scale(1); }
-            25% { transform: perspective(600px) rotateY(90deg) rotateZ(4deg) scale(1.08); }
-            50% { transform: perspective(600px) rotateY(180deg) rotateZ(0deg) scale(1); }
-            75% { transform: perspective(600px) rotateY(270deg) rotateZ(-4deg) scale(1.08); } }
         .floating-footer { text-align: center; padding: 30px 0; background: transparent !important;
             border: none !important; box-shadow: none !important; margin-top: 30px; }
         .footer-logo-row img { height: 55px; width: auto; transition: 0.3s; opacity: 0.8; }
@@ -167,13 +144,12 @@
             </div>
             <div class="glass-card gold-border">
                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:16px;">
-                    <i class="fas fa-file-patent" style="color:var(--gold); font-size:1.5rem;"></i>
-                    <h3 style="font-weight:600; font-size:1.1rem;">Patent & Status</h3>
+                    <i class="fas fa-shield-alt" style="color:var(--gold); font-size:1.5rem;"></i>
+                    <h3 style="font-weight:600; font-size:1.1rem;">Patent Status</h3>
                 </div>
                 <div class="patent-block">
-                    <div class="patent-title" id="patentNumber">SA 2026/05142</div>
-                    <div class="patent-detail" id="patentTitle">ADAPTIVE LEARNING ECOSYSTEM WITH INTEGRATED SAFETY MONITORING AND OPTIONAL QUANTUM-SECURE VERIFICATION</div>
-                    <div style="margin-top:8px;">
+                    <div class="patent-detail" id="patentTitle" style="line-height:1.6;">ADAPTIVE LEARNING ECOSYSTEM WITH INTEGRATED SAFETY MONITORING AND OPTIONAL QUANTUM-SECURE VERIFICATION</div>
+                    <div style="margin-top:12px;">
                         <span class="patent-detail"><strong>Applicant:</strong> <span id="patentApplicant">MINDTECH INDUSTRIES (PTY) LTD</span></span><br>
                         <span class="patent-detail"><strong>Inventor:</strong> <span id="patentInventor">MDLULI, Llewelyn Khulumani</span></span><br>
                         <span class="patent-detail"><strong>Filing Date:</strong> <span id="patentFiling">12 May 2026</span></span><br>
@@ -206,14 +182,6 @@
             <a href="https://quantum-ai-z2wx.onrender.com/docs" target="_blank" class="docs-link"><i class="fas fa-book"></i> API Documentation</a>
             <button class="btn btn-ghost" onclick="showToast('⚛️ Quantum status: CHSH S=2.76 · Operational', 'success')"><i class="fas fa-atom"></i> Check Status</button>
         </div>
-        <a href="https://kdconcepts.com" target="_blank" rel="noopener" id="corporate-ad-center" class="corporate-ad-center" onclick="openKDConcepts(event)">
-            <img id="corporate-ad-logo" src="https://i.postimg.cc/T3ytnBqN/KD-LOGO-IMAGE-removebg-preview.png" class="kd-rotating-logo" onerror="this.style.display='none'">
-            <div class="corporate-ad-text">
-                <strong id="corporate-ad-title">Quantum AI Sponsored by KD Concepts</strong>
-                <span id="corporate-ad-tagline">Advertising · Platform Exposure · Circular Economy Partner</span>
-            </div>
-            <i class="fas fa-external-link-alt" style="color: var(--gold); font-size: 1.2rem;"></i>
-        </a>
         <footer class="floating-footer">
             <div class="footer-logo-row">
                 <a href="https://mindtech.africa" target="_blank">
@@ -221,7 +189,7 @@
                 </a>
             </div>
             <p class="copyright">© 2026 MindFlow · Khensani AI · Powered by <a href="https://mindtech.africa" style="text-decoration: none;"><span class="mindtech-glitch">MindTech</span></a> · Transforming African education</p>
-            <div class="footer-bottom">⚛️ CHSH S=2.76 · SA Patent 2026/05142 · IBM Jobs d8uhvl4bp3hs738628cg · d8uhvdtbh0os73er2o90</div>
+            <div class="footer-bottom">⚛️ CHSH S=2.76 · IBM Jobs d8uhvl4bp3hs738628cg · d8uhvdtbh0os73er2o90</div>
         </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
@@ -244,7 +212,6 @@
             clearTimeout(toastTimer);
             toastTimer = setTimeout(() => toast.classList.remove('show'), 4000);
         }
-        function openKDConcepts(e) { e.preventDefault(); window.open('https://kdconcepts.com', '_blank'); }
         function updateUI(data) {
             document.getElementById('chshValue').textContent = data.chsh_s?.toFixed(2) || '2.76';
             document.getElementById('correlationValue').textContent = (data.correlation * 100)?.toFixed(1) + '%' || '98.4%';
@@ -281,7 +248,7 @@
                         const entangleData = await entangleRes.json();
                         updateUI({ chsh_s: entangleData.S || 2.76, correlation: 0.984, percent_above_classical: 38,
                             text: 'CHSH S=2.76 · 38% Above Classical', ibm_job_id: entangleData.job_id || 'd8uhvl4bp3hs738628cg',
-                            verification_date: '2026-06-25', patent: 'SA 2026/05142', qubits: 156 });
+                            verification_date: '2026-06-25', qubits: 156 });
                         success = true;
                     }
                 } catch (e) { console.warn('d26d EntangleGuard API unreachable:', e); }
@@ -290,7 +257,7 @@
                 showToast('⚠️ All backends cold-starting. Using cached IBM data.', 'error');
                 updateUI({ chsh_s: 2.76, correlation: 0.984, percent_above_classical: 38,
                     text: 'CHSH S=2.76 · 38% Above Classical', ibm_job_id: 'd8uhvl4bp3hs738628cg',
-                    verification_date: '2026-06-25', patent: 'SA 2026/05142', qubits: 156 });
+                    verification_date: '2026-06-25', qubits: 156 });
             } else { showToast('✅ Quantum data refreshed from live backend', 'success'); }
         }
         document.addEventListener('keydown', (e) => { if (e.key === 'r' || e.key === 'R') refreshData(); });
@@ -299,7 +266,6 @@
             console.log('🚀 MindTech Quantum AI Loaded');
             console.log('   ⚛️ CHSH S=2.76 · 38% Above Classical');
             console.log('   📡 Press R to refresh');
-            console.log('   📄 SA Patent 2026/05142');
             console.log('   📚 API Docs: https://quantum-ai-z2wx.onrender.com/docs');
         });
     </script>
